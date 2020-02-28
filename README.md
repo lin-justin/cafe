@@ -21,4 +21,4 @@ Once Python 3.7 is installed, you can install the package as so:
 
 ## Usage
 
-Please see the examples folder.# cafe
+Please see the examples folder.
