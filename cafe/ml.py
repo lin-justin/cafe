@@ -23,8 +23,8 @@ from sklearn.preprocessing import FunctionTransformer
 from sklearn.model_selection import train_test_split, RandomizedSearchCV, cross_val_score
 from sklearn.metrics import matthews_corrcoef, classification_report, log_loss, plot_roc_curve, confusion_matrix
 from sklearn.linear_model import SGDClassifier
-from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
-from sklearn.tree import DecisionTreeClassifier, ExtraTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier, ExtraTreesClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 import random
 random.seed(9999)
@@ -133,8 +133,8 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                                                         ('GBM', GradientBoostingClassifier(random_state = 9999))])))
             pipelines.append(('Decision Tree', skl_pipeline([('Standardization', FunctionTransformer(standardize)),
                                                         ('DT', DecisionTreeClassifier(random_state = 9999))])))
-            pipelines.append(('Extra Tree', skl_pipeline([('Standardization', FunctionTransformer(standardize)),
-                                                        ('ET', ExtraTreeClassifier(random_state = 9999))])))
+            pipelines.append(('Extra Trees', skl_pipeline([('Standardization', FunctionTransformer(standardize)),
+                                                        ('ET', ExtraTreesClassifier(random_state = 9999))])))
             pipelines.append(('Logistic Regression (SGD)', skl_pipeline([('Standardization', FunctionTransformer(standardize)),
                                                         ('LOGSGD', SGDClassifier(loss = 'log', random_state = 9999))])))
 
@@ -161,8 +161,8 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 return RandomForestClassifier()
             elif 'Decision Tree' in selected_model:
                 return DecisionTreeClassifier()
-            elif 'Extra Tree' in selected_model:
-                return ExtraTreeClassifier()
+            elif 'Extra Trees' in selected_model:
+                return ExtraTreesClassifier()
             elif 'Logistic Regression (SGD)' in selected_model:
                 return SGDClassifier(loss = 'log')
 
@@ -185,10 +185,10 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
             return DecisionTreeClassifier()
 
         elif model == 'et':
-            et_pipe = skl_pipeline([('Standardization', FunctionTransformer(standardize)), ('ET', ExtraTreeClassifier(random_state = 9999))])
+            et_pipe = skl_pipeline([('Standardization', FunctionTransformer(standardize)), ('ET', ExtraTreesClassifier(random_state = 9999))])
             et_score = cross_val_score(et_pipe, X, y, cv = cv, scoring = scoring)
-            print('\nExtra Tree score: {:.4f} ± {:.4f}'.format(np.mean(et_score), np.std(et_score)))
-            return ExtraTreeClassifier()
+            print('\nExtra Trees score: {:.4f} ± {:.4f}'.format(np.mean(et_score), np.std(et_score)))
+            return ExtraTreesClassifier()
         
         elif model == 'log_sgd':
             log_pipe = skl_pipeline([('Standardization', FunctionTransformer(standardize)), ('LOGSGD', SGDClassifier(loss = 'log', random_state = 9999))])
@@ -324,14 +324,14 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 
                 return clf
 
-            elif selected_model.__class__.__name__ == 'ExtraTreeClassifier':
+            elif selected_model.__class__.__name__ == 'ExtraTreesClassifier':
                 
                 start = time()
 
                 pipe = skl_pipeline([('Standardization', FunctionTransformer(standardize)), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
-                        'clf__splitter': ['best', 'random'],
+                        'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
                         'clf__max_features': ['sqrt', 'auto'],
@@ -503,14 +503,14 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 
                 return clf
 
-            elif selected_model.__class__.__name__ == 'ExtraTreeClassifier':
+            elif selected_model.__class__.__name__ == 'ExtraTreesClassifier':
                 
                 start = time()
 
                 pipe = imbl_pipeline([('Standardization', FunctionTransformer(standardize)), ('SMOTETOMEK', SMOTETomek()), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
-                        'clf__splitter': ['best', 'random'],
+                        'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
                         'clf__max_features': ['sqrt', 'auto'],
@@ -683,14 +683,14 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 
                 return clf
 
-            elif selected_model.__class__.__name__ == 'ExtraTreeClassifier':
+            elif selected_model.__class__.__name__ == 'ExtraTreesClassifier':
                 
                 start = time()
 
                 pipe = imbl_pipeline([('Standardization', FunctionTransformer(standardize)), ('SMOTENN', SMOTEENN()), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
-                        'clf__splitter': ['best', 'random'],
+                        'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
                         'clf__max_features': ['sqrt', 'auto'],
