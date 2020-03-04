@@ -5,7 +5,7 @@ with open('README.md', 'r') as fh:
 
 setuptools.setup(
     name = "cafe",
-    version = "2.0.4",
+    version = "2.0.5",
     author = "Justin Lin",
     description = 'Classifying Antibodies for Expression',
     long_description = long_description,
@@ -25,7 +25,7 @@ setuptools.setup(
         "matplotlib>=3.1.2",
         "numpy>=1.17.4",
         "pandas>=0.24.2",
-        "scikit-learn==0.22",
+        "scikit-learn>=0.22",
         "scikit-plot==0.3.7",
         "seaborn==0.9.0",
         "imbalanced-learn==0.6.1",
