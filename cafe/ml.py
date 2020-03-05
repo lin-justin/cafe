@@ -546,12 +546,12 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
 
                 pipe = imbl_pipeline([('Standardization', FunctionTransformer(standardize)), ('SMOTETOMEK', SMOTETomek()), ('clf', selected_model)])
 
-                log_grid = {'clf__base_estimator__loss': ['log'],
-                            'clf__base_estimator__penalty': ['l2', 'l1', 'elasticnet'],
-                            'clf__base_estimator__alpha': [0.01, 0.001, 0.0001],
-                            'clf__base_estimator__max_iter': [1000, 5000],
-                            'clf__base_estimator__class_weight': ['balanced', None],
-                            'clf__base_estimator__random_state': [9999],
+                log_grid = {'clf__loss': ['log'],
+                            'clf__penalty': ['l2', 'l1', 'elasticnet'],
+                            'clf__alpha': [0.01, 0.001, 0.0001],
+                            'clf__max_iter': [1000, 5000],
+                            'clf__class_weight': ['balanced', None],
+                            'clf__random_state': [9999],
                             'SMOTETOMEK__random_state': [9999]}
 
                 clf = RandomizedSearchCV(pipe,
