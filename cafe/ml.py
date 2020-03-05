@@ -331,6 +331,7 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 pipe = skl_pipeline([('Standardization', FunctionTransformer(standardize)), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
+                        'clf__n_estimators': [int(x) for x in np.linspace(start = 100, stop = 1000, num = 10)],
                         'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
@@ -510,6 +511,7 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 pipe = imbl_pipeline([('Standardization', FunctionTransformer(standardize)), ('SMOTETOMEK', SMOTETomek()), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
+                        'clf__n_estimators': [int(x) for x in np.linspace(start = 100, stop = 1000, num = 10)],
                         'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
@@ -690,6 +692,7 @@ def classify(features, labels, model = 'all', resample_method = None, scoring = 
                 pipe = imbl_pipeline([('Standardization', FunctionTransformer(standardize)), ('SMOTENN', SMOTEENN()), ('clf', selected_model)])
 
                 et_grid = {'clf__criterion': ['gini'],
+                        'clf__n_estimators': [int(x) for x in np.linspace(start = 100, stop = 1000, num = 10)],
                         'clf__bootstrap': [True, False],
                         'clf__max_depth': [int(x) for x in np.linspace(10, 110, num= 11)],
                         'clf__min_samples_leaf': [1, 2, 4],
