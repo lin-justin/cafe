@@ -1,0 +1,11 @@
+https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2186325/
+
+https://www.researchgate.net/figure/Average-SASA-values-for-amino-acids_tbl5_24032510
+
+https://www.promega.com/~/media/files/resources/technical%20references/amino%20acid%20abbreviations%20and%20molecular%20weights.pdf
+
+https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0045869#s2
+
+https://www.genscript.com/amino_acid_structure.html
+
+https://www.mathworks.com/help/bioinfo/ref/aa2int.html
